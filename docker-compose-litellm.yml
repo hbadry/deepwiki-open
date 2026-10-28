@@ -22,6 +22,9 @@ services:
       # Use env. variable LITELLM_MASTER_KEY
       # otherwise default to sk-1234
       - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY:-sk-1234}
+      # Read from the git-ignored .env file
+      - VOYAGE_API_KEY=${VOYAGE_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
     # Using from litellm-config.yml
     #environment:
     #  DATABASE_URL: postgres://litellm:litellm_password@db:5432/litellm
@@ -53,6 +56,8 @@ services:
       # LiteLLM-specific config overrides
       - ./api/config/generator.litellm.json:/app/api/config/generator.json:ro
       - ./api/config/embedder.litellm.json:/app/api/config/embedder.json:ro
+      # Local repositories to index (enter the container path in the UI)
+      - C:/Users/Sheen/source/repos/ShuraSolutions/NBO/NDC.WT.Backend:/repos/NDC.WT.Backend:ro
     # Resource limits for docker-compose up (not Swarm mode)
     mem_limit: 6g
     mem_reservation: 2g

@@ -7,9 +7,9 @@
   },
   "embedder": {
     "client_class": "LiteLLMClient",
-    "batch_size": 10,
+    "batch_size": 64,
     "model_kwargs": {
-      "model": "nomic-embed-text"
+      "model": "voyage-code-4"
     }
   },
   "retriever": {

@@ -143,11 +143,12 @@ class _OpenAICompatStreamer(ChatStreamer):
         self.model_kwargs = {
             "model": model,
             "stream": True,
-            "temperature": model_config["temperature"],
         }
-        # Only add top_p if it exists in the model config
-        if "top_p" in model_config:
-            self.model_kwargs["top_p"] = model_config["top_p"]
+        # Only send sampling/length params the model config sets; newer models
+        # (e.g. Claude 5.5) reject temperature/top_p.
+        for key in ("temperature", "top_p", "max_tokens"):
+            if key in model_config:
+                self.model_kwargs[key] = model_config[key]
 
     @abstractmethod
     def _build_client(self) -> "OpenAIClient":
